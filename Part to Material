@@ -21,6 +21,7 @@ let
     #"Added Conditional Column" = Table.AddColumn(#"Grouped Rows3", "Press Material", each if Text.Contains([AllComponents], "0049388319") then "0049388319" else if Text.Contains([AllComponents], "0049388613") then "0049388613" else if Text.Contains([AllComponents], "0049388320") then "0049388320" else if Text.Contains([AllComponents], "0049388321") then "0049388321" else if Text.Contains([AllComponents], "0070604419") then "0070604419" else if Text.Contains([AllComponents], "0049388595") then "0049388595" else if Text.Contains([AllComponents], "0070604184") then "0070604184" else if Text.Contains([AllComponents], "0090005480") then "0090005480" else if Text.Contains([AllComponents], "0070600024") then "0070600024" else if Text.Contains([AllComponents], "0049385976") then "0049385976" else if Text.Contains([AllComponents], "0070600047") then "0070600047" else if Text.Contains([AllComponents], "0070600049") then "0070600049" else if Text.Contains([AllComponents], "0070600065") then "0070600065" else [AllComponents]),
     #"Changed Type1" = Table.TransformColumnTypes(#"Added Conditional Column",{{"Press Material", type text}}),
     #"Merged Queries4" = Table.NestedJoin(#"Changed Type1",{"Press Material"},MM01_Data,{"Material (Plant)"},"MM01_Data",JoinKind.LeftOuter),
-    #"Expanded MM01_Data" = Table.ExpandTableColumn(#"Merged Queries4", "MM01_Data", {"Column2", "Old material number"}, {"MM01_Data.Column2", "MM01_Data.Old material number"})
+    #"Expanded MM01_Data" = Table.ExpandTableColumn(#"Merged Queries4", "MM01_Data", {"Column2", "Old material number"}, {"MM01_Data.Column2", "MM01_Data.Old material number"}),
+    FinalTable = #"Expanded MM01_Data"
 in
-    #"Expanded MM01_Data"
+    FinalTable
